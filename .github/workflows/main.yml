@@ -39,7 +39,7 @@ jobs:
       - run: mypy jwt_pydantic/
 
   twine_publish:
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -52,11 +52,9 @@ jobs:
 
       - name: Build jwt_pydantic
         run: |
-          python -m pip install build
+          python -m pip install build twine
           python -m build
 
-      - name: Install Twine
-        run: python -m pip install twine
-
       - name: Publish to pypi
-        run: twine upload -r testpypi dist/*
+        run: twine check dist/*
+        # run: twine upload -r testpypi dist/*
