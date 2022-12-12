@@ -14,7 +14,7 @@ from starlette.types import ASGIApp, Receive, Scope, Send
 
 class JWTPyantic(BaseModel):
     """
-    Enables easy checking of JWT claims, whilst also using
+    Enable easy checking of JWT claims, whilst also using
     the powerful features of Pydantic models, to verify the contents
     of the claims being used.
     Example usage:
