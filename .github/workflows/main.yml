@@ -15,7 +15,8 @@ jobs:
   build:
     strategy:
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        # python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.11"]
     runs-on: ubuntu-latest
 
     steps:
@@ -60,4 +61,4 @@ jobs:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
         run: |
-          twine upload -r testpypi dist/*
+          twine upload --non-interactive -r testpypi dist/*
