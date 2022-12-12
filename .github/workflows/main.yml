@@ -61,4 +61,4 @@ jobs:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
         run: |
-          twine upload --non-interactive -r testpypi dist/*
+          twine upload --non-interactive --verbose -r testpypi dist/*
