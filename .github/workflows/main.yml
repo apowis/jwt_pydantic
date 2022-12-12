@@ -6,17 +6,16 @@ on:
   pull_request:
     branches:
       - main
-    # paths:
-    #   - 'jwt_pydantic/**'
-    #   - 'tests/'
+    paths:
+      - 'jwt_pydantic/**'
+      - 'tests/'
     types: [opened, synchronize, reopened, closed]
 
 jobs:
   build:
     strategy:
       matrix:
-        # python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
-        python-version: ["3.11"]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
     runs-on: ubuntu-latest
 
     steps:
@@ -32,15 +31,15 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Pip install jwt_pydantic
-        run: |
-          pip install .[test]
+        run: pip install .[test]
 
+      # run pylint, pytest and mypy
+      - run: pylint jwt_pydantic/
       - run: pytest --cov=jwt_pydantic/
-
       - run: mypy jwt_pydantic/
 
   twine_publish:
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     needs: build
     runs-on: ubuntu-latest
     steps:
