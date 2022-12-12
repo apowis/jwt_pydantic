@@ -2,7 +2,6 @@
 A Starlette middleware that can be used with a JWTPydantic model.
 """
 # pylint: disable=too-few-public-methods
-
 from typing import Dict, Optional, Union
 
 from jose import jwt, JWTError
