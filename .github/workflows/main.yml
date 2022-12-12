@@ -6,9 +6,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - 'jwt_pydantic/**'
-      - 'tests/'
     types: [opened, synchronize, reopened, closed]
 
 jobs:
