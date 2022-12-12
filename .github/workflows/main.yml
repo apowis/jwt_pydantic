@@ -56,4 +56,7 @@ jobs:
           python -m build
 
       - name: Publish to pypi
+        with:
+          TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
         run: twine upload -r testpypi dist/*
