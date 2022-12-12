@@ -90,6 +90,3 @@ MyJWT.new_token(
 )
 ```
 
-## FastAPI APIKey Usage
-
-FastAPI also makes it easy to use API keys. We can integrate JWTPydantic into this very easily, as shown [here](examples/api_key.py)
