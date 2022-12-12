@@ -56,5 +56,4 @@ jobs:
           python -m build
 
       - name: Publish to pypi
-        run: twine check dist/*
-        # run: twine upload -r testpypi dist/*
+        run: twine upload -r testpypi dist/*
