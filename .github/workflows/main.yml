@@ -30,13 +30,26 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install Flit
-        run: python -m pip install flit
-
-      - name: Pip install jwt-pydanitc
+      - name: Pip install jwt_pydantic
         run: |
           pip install .[test]
 
       - run: pytest --cov=jwt_pydantic/
 
       - run: mypy jwt_pydantic/
+
+  twine_publish:
+    if: github.event.pull_request.merged == true
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+
+      - name: Build jwt_pydantic
+        run: python -m build
+
+      - name: Install Twine
+        run: python -m pip install twine
