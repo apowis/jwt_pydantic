@@ -3,7 +3,7 @@
 from pydantic import Field, ValidationError
 import pytest
 
-from jwt_pydantic import JWTPyantic
+from jwt_pydantic import JWTPydantic
 from tests.fixtures import claims, MyJWT, SECRET_KEY
 
 

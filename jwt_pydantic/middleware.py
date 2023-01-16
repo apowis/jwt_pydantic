@@ -12,13 +12,13 @@ from starlette.responses import PlainTextResponse
 from starlette.types import ASGIApp, Receive, Scope, Send
 
 
-class JWTPyantic(BaseModel):
+class JWTPydantic(BaseModel):
     """
     Enable easy checking of JWT claims, whilst also using
     the powerful features of Pydantic models, to verify the contents
     of the claims being used.
     Example usage:
-        >>> class MyJWT(JWTPyantic):
+        >>> class MyJWT(JWTPydantic):
         >>>     foo: int
         >>>     bar: str
         >>> SECRET_KEY = 'mykey'
@@ -109,7 +109,7 @@ class JWTPydanticMiddleware:
         self,
         app: ASGIApp,
         header_name: str,
-        jwt_pydantic_model: JWTPyantic,
+        jwt_pydantic_model: JWTPydantic,
         jwt_key: Union[str, bytes],
     ) -> None:
         self.app = app

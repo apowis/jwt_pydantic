@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from httpx import Response
 
-from jwt_pydantic import JWTPyantic, JWTPydanticMiddleware
+from jwt_pydantic import JWTPydantic, JWTPydanticMiddleware
 from tests.fixtures import claims, MyJWT, SECRET_KEY
 
 
@@ -48,7 +48,7 @@ def test_bad_jwt():
 
 
 def test_bad_pydantic_model():
-    class WrongModel(JWTPyantic):
+    class WrongModel(JWTPydantic):
         a: int
 
     token = WrongModel.new_token({"a": 0}, SECRET_KEY)

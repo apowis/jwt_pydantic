@@ -1,12 +1,12 @@
 from pydantic import Field
 import pytest
 
-from jwt_pydantic import JWTPyantic
+from jwt_pydantic import JWTPydantic
 
 SECRET_KEY = "mykey"
 
 
-class MyJWT(JWTPyantic):
+class MyJWT(JWTPydantic):
     foo: int
     bar: int = Field(ge=0, le=10)
 
