@@ -5,9 +5,9 @@ inputs:
     description: "Type of bump - [major, minor, micro]."
     required: true
 
-  github_token:
-    description: "github_token"
-    required: true
+  # github_token:
+  #   description: "github_token"
+  #   required: true
 
   pyproject_toml:
     description: "Path to pyproject.toml"

@@ -51,11 +51,12 @@ if __name__ == "__main__":
     bump_func = bump_funcs[args.bumptype]
 
     pyproj = Path(args.pyproj_path)
-    with pyproj.open("rb") as fh:
+    with pyproj.open("r") as fh:
         pyproj_dict = toml.load(fh)
 
     old_version = version.parse(pyproj_dict["project"]["version"])
     new_version = bump_func(old_version)
     pyproj_dict["project"]["version"] = str(new_version)
-    with pyproj.open("wb") as fh:  # type: ignore
+    print(toml.dumps(pyproj_dict))
+    with pyproj.open("w") as fh:  # type: ignore
         toml.dump(pyproj_dict, fh)
