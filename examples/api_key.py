@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.security.api_key import APIKeyHeader, APIKey
 from fastapi import Depends, Security, HTTPException
 from starlette.status import HTTP_403_FORBIDDEN
-from jwt_pydantic import JWTPyantic
+from jwt_pydantic import JWTPydantic
 
 
 SECRET_KEY = "mykey"
@@ -16,7 +16,7 @@ api_key_header = APIKeyHeader(name="access_token", auto_error=False)
 app = FastAPI()
 
 
-class MyJWT(JWTPyantic):
+class MyJWT(JWTPydantic):
     foo: int
 
 
