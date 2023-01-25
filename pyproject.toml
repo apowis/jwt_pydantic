@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "jwt_pydantic"
 description = "Verify JWT claims using the powerful features of Pydantic."
-version = "0.0.5"
+version = "0.0.6"
 authors = [{name = "Adam Powis"}]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -27,6 +27,3 @@ test = [
     "pylint",
     "types-python-jose==3.3.4",
 ]
-
-[tool.setuptools.packages.find]
-where = ["jwt_pydantic"]
