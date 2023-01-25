@@ -52,7 +52,7 @@ class JWTPydantic(BaseModel):
     @classmethod
     def new_token(
         cls,
-        claims: dict,
+        claims: Dict[str, Any],
         key: Union[str, bytes],
         algorithm: str = ALGORITHMS.HS256,
         jose_opts: JoseOpts = None,
