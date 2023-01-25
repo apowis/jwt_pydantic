@@ -78,6 +78,17 @@ import requests
 requests.get('http://127.0.0.1:8000/', headers={'jwt': MyJWT.new_token({'foo': 1}, 'mykey')})  # b'Hello World'
 ```
 
+If we want to change the response when the JWT token is bad, you can override the method in `bad_response` in `JWTPydanticMiddleware`, such as below:
+
+```python
+class MyMiddleware(JWTPydanticMiddleware):
+    def bad_response(self, token_error: str) -> JSONResponse:
+        """Changing standard response to be a JSONResponse"""
+        return JSONResponse(
+            {"bad_token": token_error}, status_code=403
+        )
+```
+
 ## python-jose keyword arguments
 
 `JWTPydantic` uses [python-jose](https://pypi.org/project/python-jose/) to manage the JWT tokens. The extra features that are provided using this package can be easily used through the keyword argument `jose_opts`. For instance, we can add the 'at_hash' claim to our JWT token by specifying the keyword argument `access_token`.

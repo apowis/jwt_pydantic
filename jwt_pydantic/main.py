@@ -1,15 +1,11 @@
 """
 A Starlette middleware that can be used with a JWTPydantic model.
 """
-# pylint: disable=too-few-public-methods
 from typing import Dict, Optional, Union
 
-from jose import jwt, JWTError
+from jose import jwt
 from jose.constants import ALGORITHMS
-from pydantic import BaseModel, ValidationError  # pylint: disable=no-name-in-module
-from starlette.datastructures import Headers
-from starlette.responses import PlainTextResponse
-from starlette.types import ASGIApp, Receive, Scope, Send
+from pydantic import BaseModel  # pylint: disable=no-name-in-module
 
 
 class JWTPydantic(BaseModel):
@@ -98,52 +94,3 @@ class JWTPydantic(BaseModel):
                 access_token) used by python-jose to decode the jwt_token.
         """
         cls(jwt_token, key, algorithm, jose_opts)
-
-
-class JWTPydanticMiddleware:
-    """
-    A Starlette middleware that can be used with a JWTPydantic model.
-    """
-
-    def __init__(
-        self,
-        app: ASGIApp,
-        header_name: str,
-        jwt_pydantic_model: JWTPydantic,
-        jwt_key: Union[str, bytes],
-    ) -> None:
-        self.app = app
-        self.header_name = header_name
-        self.jwt_pydantic_model = jwt_pydantic_model
-        self.jwt_key = jwt_key
-
-    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        if scope["type"] not in ("http", "websocket"):  # pragma: no cover
-            await self.app(scope, receive, send)
-            return
-
-        headers = Headers(scope=scope)
-        check_model = self._check_pydantic_model(headers)
-        if check_model:  # errror found.
-            response = PlainTextResponse(check_model, 403)
-            await response(scope, receive, send)
-            return
-
-        await self.app(scope, receive, send)
-
-    def _check_pydantic_model(self, headers: Headers) -> Optional[str]:
-        """
-        Checks the supplied model and returns the exception string if one
-        is found. If no error is found, then None is returned.
-        """
-        jwt_token = headers.get(self.header_name)
-        if not jwt_token:
-            return f"No {self.header_name} header found"
-        try:
-            self.jwt_pydantic_model.verify_token(jwt_token, self.jwt_key)
-        except JWTError as err:
-            return str(err)
-        except ValidationError as err:
-            return str(err)
-
-        return None
