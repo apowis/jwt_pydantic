@@ -1,11 +1,14 @@
 """
 A Starlette middleware that can be used with a JWTPydantic model.
 """
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Mapping, Optional, Union
 
 from jose import jwt
 from jose.constants import ALGORITHMS
 from pydantic import BaseModel  # pylint: disable=no-name-in-module
+
+
+JoseOpts = Optional[Mapping[str, Any]]
 
 
 class JWTPydantic(BaseModel):
@@ -29,7 +32,7 @@ class JWTPydantic(BaseModel):
         jwt_token: Union[str, bytes],
         key: Union[str, bytes],
         algorithm: str = ALGORITHMS.HS256,
-        jose_opts: Optional[Dict] = None,
+        jose_opts: JoseOpts = None,
     ):
         """
         Args:
@@ -52,7 +55,7 @@ class JWTPydantic(BaseModel):
         claims: dict,
         key: Union[str, bytes],
         algorithm: str = ALGORITHMS.HS256,
-        jose_opts: Optional[Dict] = None,
+        jose_opts: JoseOpts = None,
     ) -> str:
         """
         Takes in new claims, a key and algorithm and returns a new
@@ -80,7 +83,7 @@ class JWTPydantic(BaseModel):
         jwt_token: Union[str, bytes],
         key: Union[str, bytes],
         algorithm: str = ALGORITHMS.HS256,
-        jose_opts: Optional[Dict] = None,
+        jose_opts: JoseOpts = None,
     ) -> None:
         """
         Args:
