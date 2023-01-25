@@ -36,7 +36,7 @@ jobs:
       - run: mypy jwt_pydantic/
 
   twine_publish:
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -57,4 +57,4 @@ jobs:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
         run: |
-          twine check --strict dist/*
+          twine upload --non-interactive --verbose dist/*
