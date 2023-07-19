@@ -1,21 +1,17 @@
 [build-system]
-requires = [
-    "flit_core >=3.2,<4",
-]
-build-backend = "flit_core.buildapi"
+
+requires = ["setuptools >= 65.5.0","wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "jwt_pydantic"
 description = "Verify JWT claims using the powerful features of Pydantic."
-version = "0.0.3"
-authors = [
-    { name = "Adam Powis" },
-]
+version = "0.0.7"
+authors = [{name = "Adam Powis"}]
 readme = "README.md"
-classifiers = [
-    "License :: OSI Approved :: MIT License",
-]
-requires-python = ">=3.7.2"
+license = {file = "LICENSE"}
+classifiers = ["License :: OSI Approved :: MIT License"]
+requires-python = ">=3.8.0"
 dependencies = [
     "httpx",
     "fastapi",

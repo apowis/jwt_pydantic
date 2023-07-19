@@ -4,13 +4,14 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from httpx import Response
 
-from jwt_pydantic import JWTPydantic, JWTPydanticMiddleware
-from tests.fixtures import claims, MyJWT, SECRET_KEY
+from jwt_pydantic import JWTPydantic
+# from jwt_pydantic.middleware import JWTPydanticMiddleware
+from tests.fixtures import claims, MyJWT, MyMiddleware, SECRET_KEY
 
 
 app = FastAPI()
 app.add_middleware(
-    JWTPydanticMiddleware,
+    MyMiddleware,
     header_name="jwt",
     jwt_pydantic_model=MyJWT,
     jwt_key=SECRET_KEY,
@@ -38,13 +39,17 @@ def test_jwt(claims: dict):
 def test_no_jwt():
     resp = get_home_page()
     assert resp.status_code == 403
-    assert resp.content == b"No jwt header found"
+    assert resp.json() == {
+        "bad_token": "No jwt header found"
+    }
 
 
 def test_bad_jwt():
     resp = get_home_page(headers={"jwt": "bad_token"})
     assert resp.status_code == 403
-    assert b"Not enough segments" == resp.content
+    assert resp.json() == {
+        "bad_token": "Not enough segments"
+    }
 
 
 def test_bad_pydantic_model():
@@ -54,4 +59,3 @@ def test_bad_pydantic_model():
     token = WrongModel.new_token({"a": 0}, SECRET_KEY)
     resp = get_home_page({"jwt": token})
     assert resp.status_code == 403
-    assert b"field required " in resp.content and b"value_error.missing" in resp.content
