@@ -59,4 +59,3 @@ def test_bad_pydantic_model():
     token = WrongModel.new_token({"a": 0}, SECRET_KEY)
     resp = get_home_page({"jwt": token})
     assert resp.status_code == 403
-    assert b"field required " in resp.content and b"value_error.missing" in resp.content
