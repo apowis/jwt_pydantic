@@ -19,9 +19,6 @@ dependencies = [
     "python-jose",
 ]
 
-[project.license]
-file = "LICENSE"
-
 [project.optional-dependencies]
 test = [
     "black",
