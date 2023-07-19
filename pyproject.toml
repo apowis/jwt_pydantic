@@ -1,11 +1,12 @@
 [build-system]
+
 requires = ["setuptools >= 65.5.0","wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "jwt_pydantic"
 description = "Verify JWT claims using the powerful features of Pydantic."
-version = "0.0.6"
+version = "0.0.7"
 authors = [{name = "Adam Powis"}]
 readme = "README.md"
 license = {file = "LICENSE"}

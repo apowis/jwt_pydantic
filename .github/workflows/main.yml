@@ -36,6 +36,13 @@ jobs:
       - run: pytest --cov=jwt_pydantic/
       - run: mypy jwt_pydantic/
 
+      - name: bumper_attempt
+        uses: "./.github/actions/pyproject_bump/"
+        with:
+          bump_type: "micro"
+          github_token: ${{ secrets.github_token }}
+
+
   twine_publish:
     if: github.event.pull_request.merged == true
     needs: build

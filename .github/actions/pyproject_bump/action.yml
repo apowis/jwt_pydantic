@@ -1,0 +1,37 @@
+name: "pyproject.toml bump version"
+description: "pyproject.toml bump version"
+inputs:
+  bump_type:
+    description: "Type of bump - [major, minor, micro]."
+    required: true
+
+  # github_token:
+  #   description: "github_token"
+  #   required: true
+
+  pyproject_toml:
+    description: "Path to pyproject.toml"
+    default: "./pyproject.toml"
+
+
+runs:
+  using: "composite"
+  steps:
+
+    - run: pip install packaging==22.0 toml==0.10.2
+      shell: bash
+
+    - name: "Bump version"
+      shell: bash
+      run: |
+        python .github/actions/pyproject_bump/bumper.py \
+          --bumptype ${{ inputs.bump_type }} \
+          --pyproj_path ${{ inputs.pyproject_toml }}
+
+    - uses: EndBug/add-and-commit@v9
+      with:
+        add: ${{ inputs.pyproject_toml }}
+        author_name: github-actions
+        author_email: github-actions@github.com
+        message: "Bumped ${{ inputs.bump_type }} version in pyproject.toml"
+        push: false
